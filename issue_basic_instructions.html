@@ -72,41 +72,39 @@
             cursor: not-allowed;
         }
 
-        .pre-assessment-header-ribbon {
-            background-color: cornflowerblue;
+        .pre-assessment-header-banner {
+            background-color: #800080; /* Purple color */
             color: white;
             padding: 15px 20px;
-            border-radius: 5px;
-            text-align: center;
+            border-radius: 5px 0 0 5px; /* Rounded corners on the left */
+            text-align: left;
             margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            position: relative; /* Needed for pseudo-elements */
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden; /* Clip the triangle */
         }
 
-        .pre-assessment-header-ribbon::before,
-        .pre-assessment-header-ribbon::after {
+        .pre-assessment-header-banner::after {
             content: '';
             position: absolute;
-            border-top: 10px solid cornflowerblue;
-            border-bottom: 10px solid cornflowerblue;
-            z-index: -1;
+            right: 0;
+            top: 0;
+            border-top: 35px solid transparent;
+            border-left: 20px solid #800080; /* Same purple color */
+            border-bottom: 35px solid transparent;
         }
 
-        .pre-assessment-header-ribbon::before {
-            left: -20px;
-            border-left: 15px solid transparent;
-        }
-
-        .pre-assessment-header-ribbon::after {
-            right: -20px;
-            border-right: 15px solid transparent;
+        .pre-assessment-header-banner h2 {
+            margin: 0;
+            padding-right: 20px; /* Make space for the triangle */
+            font-size: 1.5em;
         }
 
         .container {
             max-width: 800px;
             margin: 30px auto;
             padding: 20px;
-            background-color: #fff;
+            background-color: #f9f9f9; /* Light background */
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
@@ -118,8 +116,8 @@
 </head>
 <body>
     <div class="container">
-        <div class="pre-assessment-header-ribbon">
-            <h2>Pre-Assessment: Issue Basic Instructions/Requests</h2>
+        <div class="pre-assessment-header-banner">
+            <h2>Pre-Assessment</h2>
         </div>
         <p>Assess your ability to give clear and basic instructions or make requests in a QSR environment (English and Spanish).</p>
 
