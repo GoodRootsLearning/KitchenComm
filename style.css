@@ -169,7 +169,7 @@ footer {
     color: #f8f9fa;
     position: fixed;
     bottom: 0;
-    height: 5%;
+    margin-top: 5%;
     width: 90%;
     font-size: 0.9em;
 }
