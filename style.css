@@ -70,6 +70,7 @@ nav ul li a:hover {
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* More pronounced shadow */
     max-width: 900px; /* Slightly wider container */
+    margin-bottom: 5%;
 }
 
 h2 {
