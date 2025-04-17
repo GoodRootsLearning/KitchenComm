@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KitchenComm CBE - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+<style>
+        .review-button {
+            display: inline-block;
+            padding: 8px 15px;
+            text-decoration: none;
+            border-radius: 4px;
+            color: white;
+            background-color: #007bff; /* Blue */
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+     </head>
+<body>
+    <header>
+        <img src="logo.png" alt="KitchenComm Logo" class="logo"> <h1>KitchenComm Competency Master</h1>
+    </header>
+    <nav> <ul>
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Help/Support</a></li> </ul>
+    </nav>
+    <main class="container">
+        <h2>Your Competencies</h2>
+        <p>Master these communication skills for a safer, more efficient kitchen. Click on a competency to begin.</p>
+        <ul class="competency-list">
+            <li>Identify Key Items & Actions <span class="status mastered">Mastered</span></li>
+            <li>Comprehend Basic Instructions <span class="status mastered">Mastered</span></li>
+
+            <li id='issue-basic-instructions' style="display: flex; align-items: center; justify-content: space-between;">
+                Issue Basic Instructions/Requests
+                <div>
+                    <span id="issue-instructions-status" class="status not-started">Not Started</span>
+                    <a href="issue_basic_instructionspa.html" class="button-link secondary" style="margin-left: 10px;">Start</a>
+                    <a href="issue_basic_instructionspa.html" id="review-issue-instructions" class="review-button" style="display: none; margin-left: 10px;">Review</a>
+                </div>
+            </li>
+            </li>
+                <li id="safety-warnings-competency" style="display: flex; align-items: center; justify-content: space-between;">
+                Exchange Safety Warnings
+                <div>
+                    <span id="safety-warnings-status" class="status not-started">Not Started</span>
+                    <a href="pre_assessment.html" class="button-link secondary" style="margin-left: 10px;">Start</a>
+                    <a href="pre_assessment.html" id="review-safety-warnings" class="review-button" style="display: none; margin-left: 10px;">Review</a>
+                </div>
+            </li>
+            <li>Use Basic Confirmation/Clarification <span class="status not-started">Not Started</span></li>
+        </ul>
+    </main>
+    <footer>
+        <p>&copy; 2025 KitchenComm Training | <a href="#">Accessibility</a> | <a href="#">Privacy Policy</a></p>
+    </footer>
+    <script src="script.js"></script>
+  <script>
+ document.addEventListener('DOMContentLoaded', function() {
+ // Issue Basic Instructions/Requests Logic (remains the same)
+            const issueInstructionsCompetency = document.getElementById('issue-basic-instructions');
+            const issueInstructionsStatus = document.getElementById('issue-instructions-status');
+            const issueInstructionsStartButton = issueInstructionsCompetency.querySelector('.button-link.secondary');
+            const issueInstructionsReviewButton = document.getElementById('review-issue-instructions');
+            const issueInstructionsPassed = localStorage.getItem('issueInstructionsPassed');
+
+            if (issueInstructionsPassed === 'true') {
+                issueInstructionsStatus.textContent = 'Complete';
+                issueInstructionsStatus.className = 'status mastered';
+                if (issueInstructionsStartButton) {
+                    issueInstructionsStartButton.style.display = 'none';
+                }
+                if (issueInstructionsReviewButton) {
+                    issueInstructionsReviewButton.style.display = 'inline-block';
+                }
+            } else if (issueInstructionsPassed === 'false') {
+                issueInstructionsStatus.textContent = 'Needs Review';
+                issueInstructionsStatus.className = 'status in-progress';
+                if (issueInstructionsStartButton) {
+                    issueInstructionsStartButton.textContent = 'Retake';
+                    issueInstructionsStartButton.href = 'issue_basic_instructionspa.html';
+                }
+                if (issueInstructionsReviewButton) {
+                    issueInstructionsReviewButton.style.display = 'inline-block';
+                } else {
+                    const newReviewButton = document.createElement('a');
+                    newReviewButton.id = 'review-issue-instructions';
+                    newReviewButton.href = 'review_issue_instructions.html';
+                    newReviewButton.className = 'review-button';
+                    newReviewButton.textContent = 'Review';
+                    const controlsDiv = issueInstructionsCompetency.querySelector('div');
+                    if (controlsDiv) {
+                        controlsDiv.appendChild(newReviewButton);
+                    }
+                }
+            } else {
+                if (issueInstructionsReviewButton) {
+                    issueInstructionsReviewButton.style.display = 'none';
+                }
+            }
+            // localStorage.removeItem('issueInstructionsPassed');
+
+            // Exchange Safety Warnings Logic (Formal Assessment) - CORRECTED
+            const safetyWarningsCompetency = document.getElementById('safety-warnings-competency');
+            const safetyWarningsStatus = document.getElementById('safety-warnings-status');
+            const safetyWarningsStartButton = safetyWarningsCompetency.querySelector('.button-link.secondary');
+            const safetyWarningsReviewButton = document.getElementById('review-safety-warnings');
+            const formalAssessmentPassed = localStorage.getItem('formalAssessmentPassed');
+
+            if (formalAssessmentPassed === 'true') {
+                safetyWarningsStatus.textContent = 'Complete';
+                safetyWarningsStatus.className = 'status mastered';
+                if (safetyWarningsStartButton) {
+                    safetyWarningsStartButton.style.display = 'none'; // Hide the start button on completion
+                }
+                if (safetyWarningsReviewButton) {
+                    safetyWarningsReviewButton.style.display = 'inline-block'; // Show the review button
+                }
+            } else if (formalAssessmentPassed === 'false') {
+                safetyWarningsStatus.textContent = 'Failed';
+                safetyWarningsStatus.className = 'status not-started';
+                if (safetyWarningsStartButton) {
+                    safetyWarningsStartButton.textContent = 'Retake';
+                    safetyWarningsStartButton.href = 'pre_assessment.html';
+                }
+                if (safetyWarningsReviewButton) {
+                    safetyWarningsReviewButton.style.display = 'inline-block'; // Optionally show review on fail
+                } else {
+                    const newReviewButton = document.createElement('a');
+                    newReviewButton.id = 'review-safety-warnings';
+                    newReviewButton.href = 'pre_assessment.html'; // Adjust review URL if needed
+                    newReviewButton.className = 'review-button';
+                    newReviewButton.textContent = 'Review';
+                    const controlsDiv = safetyWarningsCompetency.querySelector('div');
+                    if (controlsDiv) {
+                        controlsDiv.appendChild(newReviewButton);
+                    }
+                }
+            } else {
+                if (safetyWarningsReviewButton) {
+                    safetyWarningsReviewButton.style.display = 'none';
+                }
+            }
+            // localStorage.removeItem('formalAssessmentPassed');
+        });
+    </script>
+</body>
+</html>

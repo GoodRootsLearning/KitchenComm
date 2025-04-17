@@ -1,0 +1,204 @@
+/* style.css */
+
+/* Basic Reset (Optional, but recommended for consistency) */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif; /* Example modern font */
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa; /* Light grey background */
+    color: #495057; /* Darker grey text */
+    line-height: 1.6;
+}
+
+header {
+    background-color: #343a40; /* Dark grey header */
+    color: white;
+    padding: 1.5em 20px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.logo {
+    max-height: 60px; /* Slightly larger logo */
+    margin-right: 25px;
+}
+
+header h1 {
+    font-size: 2em;
+    font-weight: 500;
+}
+
+nav {
+    background-color: #e9ecef; /* Light grey navigation */
+    padding: 0.75em 20px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin-right: 25px;
+}
+
+nav ul li a {
+    color: #007bff; /* Primary link color */
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease; /* Smooth hover transition */
+}
+
+nav ul li a:hover {
+    color: #0056b3; /* Darker hover color */
+}
+
+.container {
+    padding: 30px;
+    margin: 30px auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* More pronounced shadow */
+    max-width: 900px; /* Slightly wider container */
+}
+
+h2 {
+    color: #343a40;
+    margin-bottom: 15px;
+    font-size: 2.2em;
+    font-weight: 600;
+}
+
+p {
+    line-height: 1.7;
+    margin-bottom: 1em;
+}
+
+.competency-list {
+    list-style: none;
+    padding: 0;
+}
+
+.competency-list li {
+    padding: 18px;
+    margin-bottom: 15px;
+    border: 1px solid #ced4da; /* Lighter border */
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa; /* Light background for list items */
+}
+
+.status {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.9em;
+    color: white;
+    margin-left: 15px;
+    font-weight: 500;
+}
+
+.mastered {
+    background-color: #28a745; /* Green */
+}
+
+.in-progress {
+    background-color: #ffc107; /* Yellow */
+    color: #212529;
+}
+
+.not-started {
+    background-color: #dc3545; /* Red */
+}
+
+.review-button {
+    display: inline-block;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 6px;
+    color: white;
+    background-color: #007bff; /* Blue */
+    font-size: 0.9em;
+    margin-left: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.review-button:hover {
+    background-color: #0056b3;
+}
+
+.button-link {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 6px;
+    color: white;
+    background-color: #007bff; /* Primary button color */
+    font-size: 0.95em;
+    transition: background-color 0.3s ease;
+}
+
+.button-link:hover {
+    background-color: #0056b3;
+}
+
+.button-link.secondary {
+    background-color: #6c757d; /* Grey secondary button */
+}
+
+.button-link.secondary:hover {
+    background-color: #5a6268;
+}
+
+footer {
+    text-align: center;
+    padding: 1.5em 0;
+    background-color: #343a40; /* Dark grey footer */
+    color: #f8f9fa;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-size: 0.9em;
+}
+
+footer a {
+    color: #adb5bd;
+    text-decoration: none;
+    margin: 0 8px;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #fff;
+}
+
+/* Specific to the safety warnings list item */
+#safety-warnings-competency {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Distribute space */
+}
+
+#safety-warnings-competency > span.status {
+    margin-left: auto; /* Push status to the right */
+    margin-right: 10px;
+}
+
+#safety-warnings-competency > a.button-link.secondary {
+    margin-left: 10px; /* Space from status */
+}
+
+#safety-warnings-competency > a.review-button {
+    margin-left: 10px; /* Space from status or start button */
+}

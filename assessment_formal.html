@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KitchenComm CBE - Formal Assessment</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .assessment-scenario {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+        }
+
+        .assessment-scenario h3 {
+            text-align: center;
+        }
+
+        .scenario-img {
+            max-width: 250px;
+            display: block;
+            margin: 10px auto;
+        }
+
+        .choices {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .choices button {
+            padding: 10px 15px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #f9f9f9;
+        }
+
+        .choices button.selected {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .feedback {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .correct-feedback {
+            color: green;
+        }
+
+        .incorrect-feedback {
+            color: red;
+        }
+
+        .button-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button-link.disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        #assessment-controls button {
+            margin: 0 10px;
+        }
+
+        #results-message {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .pass {
+            color: green;
+        }
+
+        .fail {
+            color: red;
+        }
+    </style>
+
+    </head>
+<body>
+    <header>
+        <img src="img/logo.png" alt="KitchenComm Logo" class="logo"> <h1>KitchenComm Competency Master</h1>
+    </header>
+    <nav> <ul>
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="#">Help/Support</a></li> </ul>
+    </nav>
+
+    <main class="container">
+        <h2>Formal Assessment: Exchange Safety Warnings</h2>
+        <p><strong>This is the formal assessment to demonstrate mastery.</strong> Your performance here will determine if you meet the competency standard.</p>
+        <p>You will be presented with <strong>5 kitchen scenarios</strong>. Respond accurately and appropriately for each. You must succeed in at least <strong>4 out of 5 scenarios</strong> to pass.</p>
+        <hr>
+
+        <div id="formal-assessment-simulation" class="simulation-area">
+            <div class="assessment-scenario" id="scenario-1">
+                <p style="text-align: right; font-size: 0.9em; color: #555;">Scenario 1 of 5</p>
+                <img src="img/hot_pan_scenario.png" alt="Simulated hazard: A very hot pan on a countertop." class="scenario-img">
+                <p style="text-align: center; font-weight: bold;">A colleague is about to place their bare hand near this pan. What is the most critical warning to give in <strong>Spanish</strong>?</p>
+                <div class="choices" data-correct="caliente" data-question="q1_formal">
+                    <button type="button" value="piso_mojado" class="secondary">A) ¡Piso Mojado!</button>
+                    <button type="button" value="cuidado" class="secondary">B) ¡Cuidado!</button>
+                    <button type="button" value="caliente" class="secondary">C) ¡Caliente!</button>
+                </div>
+                <div class="feedback" id="feedback-q1_formal"></div>
+            </div>
+
+            <div class="assessment-scenario" id="scenario-2" style="display: none;">
+                <p style="text-align: right; font-size: 0.9em; color: #555;">Scenario 2 of 5</p>
+                <img src="img/knife_scenario.png" alt="Simulated hazard: A knife about to fall off a counter." class="scenario-img">
+                <p style="text-align: center; font-weight: bold;">A knife is precariously balanced on the edge of the counter. What immediate warning should you shout in <strong>Spanish</strong>?</p>
+                <div class="choices" data-correct="cuidado" data-question="q2_formal">
+                    <button type="button" value="caliente" class="secondary">A) ¡Caliente!</button>
+                    <button type="button" value="filoso" class="secondary">B) ¡Filoso!</button>
+                    <button type="button" value="cuidado" class="secondary">C) ¡Cuidado!</button>
+                </div>
+                <div class="feedback" id="feedback-q2_formal"></div>
+            </div>
+
+            <div class="assessment-scenario" id="scenario-3" style="display: none;">
+                <p style="text-align: right; font-size: 0.9em; color: #555;">Scenario 3 of 5</p>
+                <img src="img/wet_floor_scenario.png" alt="Simulated hazard: A spill on the kitchen floor." class="scenario-img">
+                <p style="text-align: center; font-weight: bold;">Someone is walking quickly towards a large spill. What should you warn them about in <strong>Spanish</strong>?</p>
+                <div class="choices" data-correct="piso_mojado" data-question="q3_formal">
+                    <button type="button" value="caliente" class="secondary">A) ¡Caliente!</button>
+                    <button type="button" value="piso_mojado" class="secondary">B) ¡Piso Mojado!</button>
+                    <button type="button" value="filoso" class="secondary">C) ¡Filoso!</button>
+                </div>
+                <div class="feedback" id="feedback-q3_formal"></div>
+            </div>
+
+            <div class="assessment-scenario" id="scenario-4" style="display: none;">
+                <p style="text-align: right; font-size: 0.9em; color: #555;">Scenario 4 of 5</p>
+                <img src="img/electrical_hazard_scenario.png" alt="Simulated hazard: Frayed electrical cord near water." class="scenario-img">
+                <p style="text-align: center; font-weight: bold;">You see a frayed electrical cord near a sink full of water. What is the most important general safety warning in <strong>Spanish</strong>?</p>
+                <div class="choices" data-correct="cuidado" data-question="q4_formal">
+                    <button type="button" value="caliente" class="secondary">A) ¡Caliente!</button>
+                    <button type="button" value="filoso" class="secondary">B) ¡Filoso!</button>
+                    <button type="button" value="cuidado" class="secondary">C) ¡Cuidado!</button>
+                </div>
+                <div class="feedback" id="feedback-q4_formal"></div>
+            </div>
+
+            <div class="assessment-scenario" id="scenario-5" style="display: none;">
+                <p style="text-align: right; font-size: 0.9em; color: #555;">Scenario 5 of 5</p>
+                <img src="img/steam_scenario.png" alt="Simulated hazard: Steam escaping from a pot." class="scenario-img">
+                <p style="text-align: center; font-weight: bold;">A pot is releasing a lot of steam, and someone is reaching over it. What specific heat-related warning should you give in <strong>Spanish</strong>?</p>
+                <div class="choices" data-correct="caliente" data-question="q5_formal">
+                    <button type="button" value="piso_mojado" class="secondary">A) ¡Piso Mojado!</button>
+                    <button type="button" value="cuidado" class="secondary">B) ¡Cuidado!</button>
+                    <button type="button" value="caliente" class="secondary">C) ¡Caliente!</button>
+                </div>
+                <div class="feedback" id="feedback-q5_formal"></div>
+            </div>
+
+            <div id="assessment-controls" style="margin-top: 20px; text-align: center;">
+                <button id="formal-assess-start" class="button-link">Start Assessment</button>
+                <button id="formal-assess-next" class="button-link" style="display: none;">Next Scenario</button>
+                <button id="formal-assess-submit" class="button-link" style="display: none;">Submit Assessment</button>
+            </div>
+
+            <div id="results-message" style="display: none;"></div>
+        </div>
+        <p style="text-align: center; margin-top: 15px;"><small>Your results will be available immediately after submission.</small></p>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 KitchenComm Training | <a href="#">Accessibility</a> | <a href="#">Privacy Policy</a></p>
+    </footer>
+
+    <script src="js/script.js"></script>
+ <script>
+        const startButton = document.getElementById('formal-assess-start');
+        const nextButton = document.getElementById('formal-assess-next');
+        const submitButton = document.getElementById('formal-assess-submit');
+        const scenarioDivs = document.querySelectorAll('.assessment-scenario');
+        const choicesContainers = document.querySelectorAll('.choices');
+        const resultsMessageDiv = document.getElementById('results-message');
+        const numScenarios = scenarioDivs.length;
+        let currentScenarioIndex = 0;
+        const userAnswers = {};
+
+        // Initialize the assessment
+        scenarioDivs.forEach((div, index) => {
+            if (index > 0) {
+                div.style.display = 'none';
+            }
+        });
+
+        startButton.addEventListener('click', () => {
+            startButton.style.display = 'none';
+            scenarioDivs[0].style.display = 'block';
+            nextButton.style.display = 'inline-block';
+        });
+
+        choicesContainers.forEach(container => {
+            const buttons = container.querySelectorAll('button');
+            const correctValue = container.dataset.correct;
+            const questionName = container.dataset.question;
+            const feedbackDiv = document.getElementById(`feedback-${questionName}`);
+
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    buttons.forEach(btn => btn.classList.remove('selected'));
+                    this.classList.add('selected');
+                    userAnswers[questionName] = this.value;
+
+                    if (this.value === correctValue) {
+                        feedbackDiv.textContent = "¡Correcto!";
+                        feedbackDiv.className = "feedback correct-feedback";
+                    } else {
+                        feedbackDiv.textContent = "Incorrecto.";
+                        feedbackDiv.className = "feedback incorrect-feedback";
+                    }
+
+                    // Disable buttons after an answer is selected for the current scenario
+                    buttons.forEach(btn => btn.disabled = true);
+                });
+            });
+        });
+
+        nextButton.addEventListener('click', () => {
+            // Re-enable buttons for the next scenario
+            const currentChoices = scenarioDivs[currentScenarioIndex].querySelector('.choices');
+            if (currentChoices) {
+                currentChoices.querySelectorAll('button').forEach(btn => {
+                    btn.disabled = false;
+                    btn.classList.remove('selected'); // Clear selection for the next scenario
+                });
+                const currentFeedback = scenarioDivs[currentScenarioIndex].querySelector('.feedback');
+                if (currentFeedback) {
+                    currentFeedback.textContent = '';
+                    currentFeedback.className = 'feedback';
+                }
+            }
+
+            scenarioDivs[currentScenarioIndex].style.display = 'none';
+            currentScenarioIndex++;
+
+            if (currentScenarioIndex < numScenarios) {
+                scenarioDivs[currentScenarioIndex].style.display = 'block';
+                if (currentScenarioIndex === numScenarios - 1) {
+                    nextButton.style.display = 'none';
+                    submitButton.style.display = 'inline-block';
+                }
+            }
+        });
+
+  submitButton.addEventListener('click', () => {
+            let correctCount = 0;
+            choicesContainers.forEach(container => {
+                const questionName = container.dataset.question;
+                if (userAnswers[questionName] === container.dataset.correct) {
+                    correctCount++;
+                }
+            });
+
+            resultsMessageDiv.style.display = 'block';
+            if (correctCount >= 4) {
+                resultsMessageDiv.textContent = `¡Felicidades! Has pasado la evaluación formal con ${correctCount} respuestas correctas de ${numScenarios}.`;
+                resultsMessageDiv.className = 'pass';
+                localStorage.setItem('formalAssessmentPassed', 'true'); // Set pass flag
+                // Optionally redirect
+                // window.location.href = 'formal_assessment_passed.html';
+            } else {
+                resultsMessageDiv.textContent = `Lo siento, no has alcanzado el puntaje mínimo. Obtuviste ${correctCount} respuestas correctas de ${numScenarios}. Necesitas al menos 4 para pasar.`;
+                resultsMessageDiv.className = 'fail';
+                localStorage.setItem('formalAssessmentPassed', 'false'); // Set fail flag
+                // Optionally redirect
+                // window.location.href = 'formal_assessment_failed.html';
+            }
+
+            // Disable all controls after submission
+            nextButton.style.display = 'none';
+            submitButton.style.display = 'none';
+            startButton.style.display = 'none';
+            choicesContainers.forEach(container => {
+                container.querySelectorAll('button').forEach(btn => btn.disabled = true);
+            });
+        });
+    </script>
+</body>
+</html>

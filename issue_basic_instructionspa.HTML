@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KitchenComm CBE - Issue Basic Instructions/Requests Pre-Assessment</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Basic styles for the pre-assessment */
+        .scenario {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+        }
+
+        .scenario h3 {
+            text-align: center;
+        }
+
+        .scenario-img {
+            max-width: 200px;
+            display: block;
+            margin: 10px auto;
+        }
+
+        .choices {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .choices button {
+            padding: 10px 15px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #f9f9f9;
+        }
+
+        .choices button.selected {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .feedback {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .correct-feedback {
+            color: green;
+        }
+
+        .incorrect-feedback {
+            color: red;
+        }
+
+        .button-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .button-link.disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Pre-Assessment: Issue Basic Instructions/Requests</h2>
+        <p>Assess your ability to give clear and basic instructions or make requests in a QSR environment (English and Spanish).</p>
+        <hr>
+        <form id="pre-assessment-form">
+            <div class="scenario">
+                <h3>Scenario 1 of 3</h3>
+                <img src="img/wash_hands_scenario.png" alt="Someone preparing food without washing hands" class="scenario-img">
+                <p style="text-align: center; font-weight: bold;">You see a new team member about to handle food without washing their hands. What's the most direct instruction in <strong>English</strong>?</p>
+                <div class="choices" data-correct="wash_your_hands" data-question="q1">
+                    <button type="button" value="can_you_wash_hands" class="secondary">A) Can you wash your hands?</button>
+                    <button type="button" value="wash_your_hands" class="secondary">B) Wash your hands.</button>
+                    <button type="button" value="hands_need_washing" class="secondary">C) Your hands need washing.</button>
+                </div>
+                <div class="feedback" id="feedback-q1"></div>
+            </div>
+
+            <div class="scenario">
+                <h3>Scenario 2 of 3</h3>
+                <img src="img/restock_supplies_scenario.png" alt="Low stock of paper cups" class="scenario-img">
+                <p style="text-align: center; font-weight: bold;">You notice the paper cup dispenser is almost empty. You need to ask a colleague to refill it in <strong>Spanish</strong>. What do you say?</p>
+                <div class="choices" data-correct="podrias_resurtir_vasos" data-question="q2">
+                    <button type="button" value="hay_pocos_vasos" class="secondary">A) Hay pocos vasos.</button>
+                    <button type="button" value="necesitamos_mas_vasos" class="secondary">B) Necesitamos más vasos.</button>
+                    <button type="button" value="podrias_resurtir_vasos" class="secondary">C) ¿Podrías resurtir los vasos?</button>
+                </div>
+                <div class="feedback" id="feedback-q2"></div>
+            </div>
+
+            <div class="scenario">
+                <h3>Scenario 3 of 3</h3>
+                <img src="img/clean_spill_scenario.png" alt="A small spill on the counter" class="scenario-img">
+                <p style="text-align: center; font-weight: bold;">There's a small spill on the counter. You need to instruct someone to clean it up in <strong>English</strong>. What's a clear and concise instruction?</p>
+                <div class="choices" data-correct="please_clean_this_spill" data-question="q3">
+                    <button type="button" value="this_spill_needs_cleaning" class="secondary">A) This spill needs cleaning.</button>
+                    <button type="button" value="can_someone_clean_this" class="secondary">B) Can someone clean this up?</button>
+                    <button type="button" value="please_clean_this_spill" class="secondary">C) Please clean this spill.</button>
+                </div>
+                <div class="feedback" id="feedback-q3"></div>
+            </div>
+
+            <hr>
+            <div style="text-align: center;">
+                <div id="all-correct-message" style="display: none; font-weight: bold; margin-bottom: 15px; color: green;">¡Buen trabajo! You have demonstrated understanding of issuing basic instructions/requests.</div>
+                <a href="issue_instructions_results.html" id="submit-button" class="button-link disabled">Submit Assessment</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const choicesContainers = document.querySelectorAll('.choices');
+        const submitButton = document.getElementById('submit-button');
+        const allCorrectMessageDiv = document.getElementById('all-correct-message');
+        const answers = {};
+        let allQuestionsAnswered = false;
+
+        choicesContainers.forEach(container => {
+            const buttons = container.querySelectorAll('button');
+            const correctValue = container.dataset.correct;
+            const questionName = container.dataset.question;
+            const feedbackDiv = document.getElementById(`feedback-${questionName}`);
+
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    buttons.forEach(btn => btn.classList.remove('selected'));
+                    this.classList.add('selected');
+                    answers[questionName] = this.value;
+
+                    if (this.value === correctValue) {
+                        feedbackDiv.textContent = "¡Correcto! / Correct!";
+                        feedbackDiv.className = "feedback correct-feedback";
+                    } else {
+                        feedbackDiv.textContent = "Incorrecto. Intenta otra vez. / Incorrect. Try again.";
+                        feedbackDiv.className = "feedback incorrect-feedback";
+                    }
+
+                    const numberOfQuestions = choicesContainers.length;
+                    const numberOfAnswers = Object.keys(answers).length;
+                    allQuestionsAnswered = numberOfAnswers === numberOfQuestions;
+
+                    let allCorrect = true;
+                    for (const question in answers) {
+                        const container = document.querySelector(`.choices[data-question="${question}"]`);
+                        if (container && answers[question] !== container.dataset.correct) {
+                            allCorrect = false;
+                            break;
+                        }
+                    }
+
+                    if (allQuestionsAnswered) {
+                        if (allCorrect) {
+                            allCorrectMessageDiv.style.display = "block";
+                            submitButton.classList.remove('disabled');
+                            submitButton.addEventListener('click', () => {
+                                localStorage.setItem('issueInstructionsAnswers', JSON.stringify(answers));
+                                localStorage.setItem('issueInstructionsPassed', 'true'); // Flag for passing
+                                window.location.href = submitButton.getAttribute('href');
+                            });
+                        } else {
+                            allCorrectMessageDiv.style.display = "none";
+                            submitButton.classList.remove('disabled');
+                            submitButton.addEventListener('click', () => {
+                                localStorage.setItem('issueInstructionsAnswers', JSON.stringify(answers));
+                                localStorage.setItem('issueInstructionsPassed', 'false'); // Flag for failing
+                                window.location.href = submitButton.getAttribute('href');
+                            });
+                        }
+                    } else {
+                        allCorrectMessageDiv.style.display = "none";
+                        submitButton.classList.add('disabled');
+                        submitButton.removeEventListener('click', () => {});
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

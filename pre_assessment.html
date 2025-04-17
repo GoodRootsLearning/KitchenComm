@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KitchenComm CBE - Pre-Assessment</title>
+    <link rel="stylesheet" href="style.css">
+<style>
+        /* Basic styles for the pre-assessment */
+        .scenario {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+        }
+
+        .scenario h3 {
+            text-align: center;
+        }
+
+        .scenario-img {
+            max-width: 200px;
+            display: block;
+            margin: 10px auto;
+        }
+
+        .choices {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .choices button {
+            padding: 10px 15px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #f9f9f9;
+        }
+
+        .choices button.selected {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .feedback {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .correct-feedback {
+            color: green;
+        }
+
+        .incorrect-feedback {
+            color: red;
+        }
+
+        .button-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .button-link.disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+
+    </head>
+<body>
+    <header>
+        <img src="img/logo.png" alt="KitchenComm Logo" class="logo"> <h1>KitchenComm Competency Master</h1>
+    </header>
+    <nav> <ul>
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="#">Help/Support</a></li> </ul>
+    </nav>
+
+    <main class="container">
+        <h2>Pre-Assessment: Exchange Safety Warnings</h2>
+        <p>Show what you know! Choose the best <strong>Spanish</strong> safety warning for each scenario below.</p>
+        <hr>
+
+  <form id="pre-assessment-form">
+    <div class="scenario">
+      <h3>Scenario 1 of 3</h3>
+      <img src="img/wet_floor_scenario.png" alt="Kitchen floor with a wet spot clearly visible" class="scenario-img">
+      <p style="text-align: center; font-weight: bold;">A colleague is walking quickly towards this wet area. What do you say?</p>
+      <div class="choices" data-correct="piso_mojado" data-question="q1">
+        <button type="button" value="caliente" class="secondary">A) ¡Caliente!</button>
+        <button type="button" value="piso_mojado" class="secondary">B) ¡Piso Mojado!</button>
+        <button type="button" value="filoso" class="secondary">C) ¡Filoso!</button>
+      </div>
+      <div class="feedback" id="feedback-q1"></div>
+    </div>
+
+    <div class="scenario">
+      <h3>Scenario 2 of 3</h3>
+      <img src="img/hot_pan_scenario.png" alt="A hot pan resting on a stove burner" class="scenario-img">
+      <p style="text-align: center; font-weight: bold;">Someone is reaching to grab this pan handle without a towel. What is the most important warning?</p>
+      <div class="choices" data-correct="caliente" data-question="q2">
+        <button type="button" value="cuidado" class="secondary">A) ¡Cuidado!</button>
+        <button type="button" value="piso_mojado" class="secondary">B) ¡Piso Mojado!</button>
+        <button type="button" value="caliente" class="secondary">C) ¡Caliente!</button>
+      </div>
+      <div class="feedback" id="feedback-q2"></div>
+    </div>
+
+    <div class="scenario">
+      <h3>Scenario 3 of 3</h3>
+      <img src="img/knife_scenario.png" alt="Person carrying a large kitchen knife somewhat carelessly" class="scenario-img">
+      <p style="text-align: center; font-weight: bold;">You need to walk past a colleague holding a knife like this. What general warning is best to say?</p>
+      <div class="choices" data-correct="cuidado" data-question="q3">
+        <button type="button" value="caliente" class="secondary">A) ¡Caliente!</button>
+        <button type="button" value="filoso" class="secondary">B) ¡Filoso!</button>
+        <button type="button" value="cuidado" class="secondary">C) ¡Cuidado!</button>
+      </div>
+      <div class="feedback" id="feedback-q3"></div>
+    </div>
+
+    <hr>
+    <div style="text-align: center;">
+      <div id="all-correct-message" class="results-message" style="display: none;"></div>
+      <a href="assessment_formal.html" id="final-assessment-link" class="final-assessment-button" style="display: none;">Ir al Examen Final</a>
+      <a href="pre_results.html" id="submit-button" class="button-link disabled">Submit Assessment</a>
+    </div>
+  </form>
+  <script>
+    const choicesContainers = document.querySelectorAll('.choices');
+    const submitButton = document.getElementById('submit-button');
+    const finalAssessmentLink = document.getElementById('final-assessment-link');
+    const allCorrectMessageDiv = document.getElementById('all-correct-message');
+    const answers = {};
+    let allQuestionsAnswered = false;
+
+    choicesContainers.forEach(container => {
+      const buttons = container.querySelectorAll('button');
+      const correctValue = container.dataset.correct;
+      const questionName = container.dataset.question;
+      const feedbackDiv = document.getElementById(`feedback-${questionName}`);
+
+      buttons.forEach(button => {
+        button.addEventListener('click', function() {
+          buttons.forEach(btn => btn.classList.remove('selected'));
+          this.classList.add('selected');
+          answers[questionName] = this.value;
+
+          if (this.value === correctValue) {
+            feedbackDiv.textContent = "¡Correcto!";
+            feedbackDiv.className = "feedback correct-feedback";
+          } else {
+            feedbackDiv.textContent = "Incorrecto. Intenta otra vez.";
+            feedbackDiv.className = "feedback incorrect-feedback";
+          }
+
+          const numberOfQuestions = choicesContainers.length;
+          const numberOfAnswers = Object.keys(answers).length;
+          allQuestionsAnswered = numberOfAnswers === numberOfQuestions;
+
+          let allCorrect = true;
+          for (const question in answers) {
+            const container = document.querySelector(`.choices[data-question="${question}"]`);
+            if (container && answers[question] !== container.dataset.correct) {
+              allCorrect = false;
+              break;
+            }
+          }
+
+          if (allQuestionsAnswered) {
+            if (allCorrect) {
+              allCorrectMessageDiv.textContent = "¡Buen trabajo! Ahora debes tomar el examen final";
+              allCorrectMessageDiv.style.display = "block";
+              finalAssessmentLink.style.display = "inline-block"; // Show the final assessment button
+              submitButton.style.display = "none"; // Hide the regular submit button
+            } else {
+              allCorrectMessageDiv.style.display = "none";
+              finalAssessmentLink.style.display = "none"; // Hide the final assessment button if not all correct
+              submitButton.style.display = "inline-block";
+              submitButton.classList.remove('disabled');
+              submitButton.addEventListener('click', () => {
+                localStorage.setItem('quizAnswers', JSON.stringify(answers));
+                window.location.href = submitButton.getAttribute('href');
+              });
+            }
+          } else {
+            allCorrectMessageDiv.style.display = "none";
+            finalAssessmentLink.style.display = "none"; // Ensure the final assessment button is hidden initially
+            submitButton.style.display = "inline-block";
+            submitButton.classList.add('disabled');
+            submitButton.removeEventListener('click', () => {});
+          }
+        });
+      });
+    });
+  </script>
+
+
+    </main>
+
+
+
+    </body>
+</html>
