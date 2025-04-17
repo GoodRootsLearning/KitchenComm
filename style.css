@@ -165,14 +165,13 @@ p {
 
 footer {
     text-align: center;
-    padding: 5%;
-    background-color: #343a40; /* Dark grey footer */
+    padding: 0.75em 0; /* Reduce the top and bottom padding */
+    background-color: #343a40;
     color: #f8f9fa;
     position: fixed;
     bottom: 0;
     width: 100%;
     font-size: 0.9em;
-    margin-top: 5%;
 }
 
 footer a {
@@ -180,12 +179,10 @@ footer a {
     text-decoration: none;
     margin: 0 8px;
     transition: color 0.3s ease;
-    margin-top: 5%; 
 }
 
 footer a:hover {
     color: #fff;
-    margin-top: 5%;
 }
 
 /* Specific to the safety warnings list item */
