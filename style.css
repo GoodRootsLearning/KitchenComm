@@ -165,13 +165,13 @@ p {
 
 footer {
     text-align: center;
-    padding: 0.75em 0; /* Reduce the top and bottom padding */
+    padding: 0.5em 0; /* Reduced padding */
     background-color: #343a40;
     color: #f8f9fa;
     position: fixed;
     bottom: 0;
     width: 100%;
-    font-size: 0.9em;
+    font-size: 0.8em; /* Slightly reduced font size */
 }
 
 footer a {
