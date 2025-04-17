@@ -71,11 +71,56 @@
             background-color: #ccc;
             cursor: not-allowed;
         }
+
+        .pre-assessment-header-ribbon {
+            background-color: cornflowerblue;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative; /* Needed for pseudo-elements */
+        }
+
+        .pre-assessment-header-ribbon::before,
+        .pre-assessment-header-ribbon::after {
+            content: '';
+            position: absolute;
+            border-top: 10px solid cornflowerblue;
+            border-bottom: 10px solid cornflowerblue;
+            z-index: -1;
+        }
+
+        .pre-assessment-header-ribbon::before {
+            left: -20px;
+            border-left: 15px solid transparent;
+        }
+
+        .pre-assessment-header-ribbon::after {
+            right: -20px;
+            border-right: 15px solid transparent;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container > h2 {
+            display: none; /* Hide the original h2 */
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Pre-Assessment: Issue Basic Instructions/Requests</h2>
+        <div class="pre-assessment-header-ribbon">
+            <h2>Pre-Assessment: Issue Basic Instructions/Requests</h2>
+        </div>
         <p>Assess your ability to give clear and basic instructions or make requests in a QSR environment (English and Spanish).</p>
 
         <form id="pre-assessment-form">
@@ -115,7 +160,6 @@
                 <div class="feedback" id="feedback-q3"></div>
             </div>
 
-          
             <div style="text-align: center;">
                 <div id="all-correct-message" style="display: none; font-weight: bold; margin-bottom: 15px; color: green;">¡Buen trabajo! You have demonstrated understanding of issuing basic instructions/requests.</div>
                 <a href="issue_instructions_results.html" id="submit-button" class="button-link disabled">Submit Assessment</a>
@@ -124,71 +168,57 @@
     </div>
 
     <script>
-        const choicesContainers = document.querySelectorAll('.choices');
-        const submitButton = document.getElementById('submit-button');
-        const allCorrectMessageDiv = document.getElementById('all-correct-message');
-        const answers = {};
-        let allQuestionsAnswered = false;
+        document.addEventListener('DOMContentLoaded', function() {
+            const choices = document.querySelectorAll('.choices');
+            const submitButton = document.getElementById('submit-button');
+            const allCorrectMessage = document.getElementById('all-correct-message');
+            let correctAnswers = 0;
+            const totalQuestions = choices.length;
+            const userAnswers = {};
 
-        choicesContainers.forEach(container => {
-            const buttons = container.querySelectorAll('button');
-            const correctValue = container.dataset.correct;
-            const questionName = container.dataset.question;
-            const feedbackDiv = document.getElementById(`feedback-${questionName}`);
+            choices.forEach(choiceDiv => {
+                const buttons = choiceDiv.querySelectorAll('button');
+                const correctValue = choiceDiv.dataset.correct;
+                const questionId = choiceDiv.dataset.question;
+                const feedbackDiv = document.getElementById(`feedback-${questionId}`);
 
-            buttons.forEach(button => {
-                button.addEventListener('click', function() {
-                    buttons.forEach(btn => btn.classList.remove('selected'));
-                    this.classList.add('selected');
-                    answers[questionName] = this.value;
+                buttons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        buttons.forEach(btn => btn.classList.remove('selected'));
+                        this.classList.add('selected');
+                        userAnswers[questionId] = this.value;
 
-                    if (this.value === correctValue) {
-                        feedbackDiv.textContent = "¡Correcto! / Correct!";
-                        feedbackDiv.className = "feedback correct-feedback";
-                    } else {
-                        feedbackDiv.textContent = "Incorrecto. Intenta otra vez. / Incorrect. Try again.";
-                        feedbackDiv.className = "feedback incorrect-feedback";
-                    }
-
-                    const numberOfQuestions = choicesContainers.length;
-                    const numberOfAnswers = Object.keys(answers).length;
-                    allQuestionsAnswered = numberOfAnswers === numberOfQuestions;
-
-                    let allCorrect = true;
-                    for (const question in answers) {
-                        const container = document.querySelector(`.choices[data-question="${question}"]`);
-                        if (container && answers[question] !== container.dataset.correct) {
-                            allCorrect = false;
-                            break;
-                        }
-                    }
-
-                    if (allQuestionsAnswered) {
-                        if (allCorrect) {
-                            allCorrectMessageDiv.style.display = "block";
-                            submitButton.classList.remove('disabled');
-                            submitButton.addEventListener('click', () => {
-                                localStorage.setItem('issueInstructionsAnswers', JSON.stringify(answers));
-                                localStorage.setItem('issueInstructionsPassed', 'true'); // Flag for passing
-                                window.location.href = submitButton.getAttribute('href');
-                            });
+                        if (this.value === correctValue) {
+                            feedbackDiv.textContent = "Correcto!";
+                            feedbackDiv.className = "feedback correct-feedback";
                         } else {
-                            allCorrectMessageDiv.style.display = "none";
-                            submitButton.classList.remove('disabled');
-                            submitButton.addEventListener('click', () => {
-                                localStorage.setItem('issueInstructionsAnswers', JSON.stringify(answers));
-                                localStorage.setItem('issueInstructionsPassed', 'false'); // Flag for failing
-                                window.location.href = submitButton.getAttribute('href');
-                            });
+                            feedbackDiv.textContent = "Incorrecto. Try again.";
+                            feedbackDiv.className = "feedback incorrect-feedback";
                         }
-                    } else {
-                        allCorrectMessageDiv.style.display = "none";
-                        submitButton.classList.add('disabled');
-                        submitButton.removeEventListener('click', () => {});
-                    }
+
+                        // Check if all questions have been answered correctly
+                        let allAnsweredCorrectly = true;
+                        for (const qId in userAnswers) {
+                            const answeredButton = choiceDiv.closest('.scenario').querySelector(`.choices button.selected[value="${userAnswers[qId]}"]`);
+                            const correctOption = choiceDiv.closest('.scenario').querySelector(`.choices[data-question="${qId}"]`).dataset.correct;
+                            if (!answeredButton || answeredButton.value !== correctOption) {
+                                allAnsweredCorrectly = false;
+                                break;
+                            }
+                        }
+
+                        if (allAnsweredCorrectly && Object.keys(userAnswers).length === totalQuestions) {
+                            submitButton.classList.remove('disabled');
+                            allCorrectMessage.style.display = 'block';
+                        } else {
+                            submitButton.classList.add('disabled');
+                            allCorrectMessage.style.display = 'none';
+                        }
+                    });
                 });
             });
         });
     </script>
 </body>
 </html>
+  
